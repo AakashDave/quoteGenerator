@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <div class="main">
+        <div class="inner" data-aos="zoom-in">
+            <div class="headpart">
+                <div class="quotelogo">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="tweetlogo">
+                    <i class="fab fa-twitter" title="tweet Me" class="tweetme" id="tweetme"></i>
+                </div>
+            </div>
+            <div class="quotepart">
+                <p id="quote"></p>
+                <p class="authorname"> - By <p id="author"></p></p>
+            </div>
+            
+            <p id="newQ">New Quote</p>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/c096fa5e26.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+          AOS.init();
+        let quote=document.getElementById('quote');
+        let author=document.getElementById('author');
+        let newQ=document.getElementById('newQ');
+        let tweetme=document.getElementById('tweetme');
+        const tweetNow=()=>{
+            let tweetpost=`https://twitter.com/intent/tweet?text=${realData.content} ${realData.author}`;
+            window.open(tweetpost);
+        }
+        let url="https://api.quotable.io/random";
+        let realData="";
+        const generateQuote=async()=>{
+            const res=await fetch(url)
+            realData=await res.json();
+            quote.innerText=realData.content;
+            author.innerText=realData.author;
+        }
+        generateQuote();
+        newQ.addEventListener('click',generateQuote);
+
+        tweetme.addEventListener('click',tweetNow);
+    </script>
+</body>
+</html>
